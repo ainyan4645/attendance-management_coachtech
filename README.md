@@ -2,9 +2,12 @@
 
 ## 環境構築
 ### Dockerビルド
-1. git clone 
+1. git clone https://github.com/ainyan4645/attendance-management_coachtech.git
+2. cd attendance-management_coachtech
+3. docker-compose up -d --build
 
 ### Laravel環境構築
+
 
 
 ## 使用技術
