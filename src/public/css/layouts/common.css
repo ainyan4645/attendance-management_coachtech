@@ -1,9 +1,8 @@
-.bg-guest {
-    background-color: #ffffff; /* 非ログイン */
-}
-
-.bg-auth {
-    background-color: #f0eff2; /* ログイン時 */
+.body-color {
+    /* 非ログイン */
+    background-color: #ffffff;
+    /* ログイン時 */
+    /* background-color: #f0eff2; */
 }
 
 .header-inner {

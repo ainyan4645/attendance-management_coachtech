@@ -9,21 +9,25 @@ class AttendanceController extends Controller
 {
     public function attendanceList()
     {
-        return view('admin.attendance_list');
+        $headerType = 'admin_logged_in';
+        return view('admin.attendance_list', compact('headerType'));
     }
 
-    public function detail($id)
+    public function detail()
     {
-        return view('admin.attendance_detail', compact('id'));
+        $headerType = 'admin_logged_in';
+        return view('admin.attendance_detail', compact('headerType'));
     }
 
     public function staffList()
     {
-        return view('admin.staff_list');
+        $headerType = 'admin_logged_in';
+        return view('admin.staff_list', compact('headerType'));
     }
 
-    public function staffAttendance($id)
+    public function staffAttendance()
     {
-        return view('admin.attendance_staff', compact('id'));
+        $headerType = 'admin_logged_in';
+        return view('admin.attendance_staff', compact('headerType'));
     }
 }

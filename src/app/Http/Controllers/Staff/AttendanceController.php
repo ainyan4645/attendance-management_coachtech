@@ -7,18 +7,21 @@ use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
 {
-    public function index() {
-        $userHasClockedOut = false; // サンプル。後でログインユーザーの退勤判定に置き換え
-        return view('staff.attendance', compact('userHasClockedOut'));
+    public function index()
+    {
+        $headerType = 'staff_after_clockout';
+        return view('staff.attendance', compact('headerType'));
     }
 
     public function list()
     {
-        return view('staff.attendance_list');
+        $headerType = 'staff_logged_in';
+        return view('staff.attendance_list', compact('headerType'));
     }
 
-    public function detail($id)
+    public function detail()
     {
-        return view('staff.attendance_detail', compact('id'));
+        $headerType = 'staff_logged_in';
+        return view('staff.attendance_detail', compact('headerType'));
     }
 }

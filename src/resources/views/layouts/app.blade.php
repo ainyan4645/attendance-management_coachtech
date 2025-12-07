@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ asset('css/layouts/common.css') }}">
     @yield('css')
 </head>
-<body class="@guest bg-guest @else bg-auth @endguest">
+<body class="body-color">
     <header class="header-inner">
         <a href="/" class="header-logo-inner">
             <img src="{{ asset('img/logo.svg') }}" alt="header-logo" class="header-logo_img">
@@ -17,8 +17,48 @@
         @if (!isset($hideHeaderNav) || !$hideHeaderNav)
         <nav class="header-nav">
             <ul class="header-nav-inner">
-                @auth('admin')
-                    {{-- adminログイン時 --}}
+                {{-- 1. 未ログイン（guest） --}}
+                @if (!isset($headerType) || $headerType === 'guest')
+                    {{-- ログインページなど → ナビなし --}}
+                @endif
+
+                {{-- 2. スタッフログイン時 --}}
+                @if (isset($headerType) && $headerType === 'staff_logged_in')
+                    <li class="header-nav-ttl">
+                        <a class="header-nav-txt" href="{{ route('attendance') }}">勤怠</a>
+                    </li>
+                    <li class="header-nav-ttl">
+                        <a class="header-nav-txt" href="{{ route('attendance_list') }}">勤怠一覧</a>
+                    </li>
+                    <li class="header-nav-ttl">
+                        <a class="header-nav-txt" href="{{ route('stamp_correction_list') }}">申請</a>
+                    </li>
+                    <li class="header-nav-ttl">
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="header-nav-txt">ログアウト</button>
+                        </form>
+                    </li>
+                @endif
+
+                {{-- 3. スタッフ退勤後 --}}
+                @if (isset($headerType) && $headerType === 'staff_after_clockout')
+                    <li class="header-nav-ttl">
+                        <a class="header-nav-txt" href="{{ route('attendance_list') }}">今月の出勤一覧</a>
+                    </li>
+                    <li class="header-nav-ttl">
+                        <a class="header-nav-txt" href="{{ route('stamp_correction_list') }}">申請一覧</a>
+                    </li>
+                    <li class="header-nav-ttl">
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="header-nav-txt">ログアウト</button>
+                        </form>
+                    </li>
+                @endif
+
+                {{-- 4. 管理者ログイン時 --}}
+                @if (isset($headerType) && $headerType === 'admin_logged_in')
                     <li class="header-nav-ttl">
                         <a class="header-nav-txt" href="{{ route('attendance_list') }}">勤怠一覧</a>
                     </li>
@@ -34,43 +74,8 @@
                             <button type="submit" class="header-nav-txt">ログアウト</button>
                         </form>
                     </li>
-                @endauth
+                @endif
 
-                @auth('web')
-                    {{-- staffログイン時 --}}
-                    @if (isset($userHasClockedOut) && $userHasClockedOut)
-                        {{-- 退勤後の画面 --}}
-                        <li class="header-nav-ttl">
-                            <a class="header-nav-txt" href="{{ route('attendance_list') }}">今月の出勤一覧</a>
-                        </li>
-                        <li class="header-nav-ttl">
-                            <a class="header-nav-txt" href="{{ route('stamp_correction_list') }}">申請一覧</a>
-                        </li>
-                        <li class="header-nav-ttl">
-                            <form action="{{ route('logout') }}" method="POST">
-                                @csrf
-                                <button type="submit" class="header-nav-txt">ログアウト</button>
-                            </form>
-                        </li>
-                    @else
-                        {{-- 通常ログイン中 --}}
-                        <li class="header-nav-ttl">
-                        <a class="header-nav-txt" href="{{ route('attendance') }}">勤怠</a>
-                        </li>
-                        <li class="header-nav-ttl">
-                            <a class="header-nav-txt" href="{{ route('attendance_list') }}">勤怠一覧</a>
-                        </li>
-                        <li class="header-nav-ttl">
-                            <a class="header-nav-txt" href="{{ route('stamp_correction_list') }}">申請</a>
-                        </li>
-                        <li class="header-nav-ttl">
-                            <form action="{{ route('logout') }}" method="POST">
-                                @csrf
-                                <button type="submit" class="header-nav-txt">ログアウト</button>
-                            </form>
-                        </li>
-                    @endif
-                @endauth
             </ul>
         </nav>
         @endif

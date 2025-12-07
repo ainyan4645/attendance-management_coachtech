@@ -8,16 +8,19 @@ class AuthController extends Controller
 {
     public function register()
     {
-        return view('auth.register');
+        $headerType = 'guest'; // 未ログイン
+        return view('auth.register', compact('headerType'));
     }
 
     public function login()
     {
-        return view('auth.login');
+        $headerType = 'guest';
+        return view('auth.login', compact('headerType'));
     }
 
     public function adminLogin()
     {
-        return view('auth.admin_login');
+        $headerType = 'guest';
+        return view('auth.admin_login', compact('headerType'));
     }
 }

@@ -9,6 +9,7 @@ class StampCorrectionController extends Controller
 {
     public function list()
     {
-        return view('staff.stamp_correction_list');
+        $headerType = 'staff_logged_in';
+        return view('staff.stamp_correction_list', compact('headerType'));
     }
 }

@@ -9,11 +9,13 @@ class StampCorrectionController extends Controller
 {
     public function list()
     {
-        return view('admin.stamp_correction_list');
+        $headerType = 'admin_logged_in';
+        return view('admin.stamp_correction_list', compact('headerType'));
     }
 
     public function approve()
     {
-        return view('admin.stamp_correction_approve');
+        $headerType = 'admin_logged_in';
+        return view('admin.stamp_correction_approve', compact('headerType'));
     }
 }
