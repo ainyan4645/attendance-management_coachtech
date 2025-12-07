@@ -31,7 +31,7 @@
                         <a class="header-nav-txt" href="{{ route('attendance_list') }}">勤怠一覧</a>
                     </li>
                     <li class="header-nav-ttl">
-                        <a class="header-nav-txt" href="{{ route('stamp_correction_list') }}">申請</a>
+                        <a class="header-nav-txt" href="">申請</a>
                     </li>
                     <li class="header-nav-ttl">
                         <form action="{{ route('logout') }}" method="POST">
@@ -47,7 +47,7 @@
                         <a class="header-nav-txt" href="{{ route('attendance_list') }}">今月の出勤一覧</a>
                     </li>
                     <li class="header-nav-ttl">
-                        <a class="header-nav-txt" href="{{ route('stamp_correction_list') }}">申請一覧</a>
+                        <a class="header-nav-txt" href="">申請一覧</a>
                     </li>
                     <li class="header-nav-ttl">
                         <form action="{{ route('logout') }}" method="POST">
@@ -66,7 +66,7 @@
                         <a class="header-nav-txt" href="{{ route('staff_list') }}">スタッフ一覧</a>
                     </li>
                     <li class="header-nav-ttl">
-                        <a class="header-nav-txt" href="{{ route('stamp_correction_list') }}">申請一覧</a>
+                        <a class="header-nav-txt" href="{{ route('admin_stamp_correction_list') }}">申請一覧</a>
                     </li>
                     <li class="header-nav-ttl">
                         <form action="{{ route('logout') }}" method="POST">
