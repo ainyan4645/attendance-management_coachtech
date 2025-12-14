@@ -9,7 +9,7 @@
     <h1 class="contents-ttl">
         管理者ログイン
     </h1>
-    <form class="admin-login" action="/login" method="POST" novalidate>
+    <form class="admin-login" action="{{ route('admin.login') }}" method="POST">
         @csrf
         <h2 class="email">
             メールアドレス

@@ -1,0 +1,42 @@
+.contents {
+    top: 80px;
+    margin-top: 290px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tag {
+    width: 100px;
+    height: 40px;
+    margin-bottom: 30px;
+    background-color: #C8C8C8;
+    border-radius: 50px;
+    text-align: center;
+    align-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #696969;
+}
+
+.date {
+    margin-bottom: 30px;
+    font-size: 40px;
+}
+
+.time {
+    margin-bottom: 85px;
+    font-size: 80px;
+    font-weight: bold;
+}
+
+.work-btn {
+    width: 220px;
+    height: 75px;
+    background-color: #000000;
+    border-radius: 20px;
+    font-size: 32px;
+    font-weight: bold;
+    color: #ffffff;
+    cursor: pointer;
+}

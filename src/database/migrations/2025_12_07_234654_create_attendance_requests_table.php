@@ -18,7 +18,7 @@ class CreateAttendanceRequestsTable extends Migration
             $table->foreignId('attendance_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('admin_id')->nullable()->constrained()->nullOnDelete();
-            $table->enum('status', ['pending', 'approved', 'rejected'])
+            $table->enum('status', ['pending', 'approved'])
                 ->default('pending');
             $table->text('request_reason')->nullable();
             $table->timestamp('requested_at')->useCurrent();

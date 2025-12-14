@@ -3,31 +3,34 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+
+use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
 {
     public function attendanceList()
     {
-        $headerType = 'admin_logged_in';
-        return view('admin.attendance_list', compact('headerType'));
+        $today = Carbon::today();
+        // まだ勤怠が無いので空コレクション
+        $attendances = collect();
+
+        return view('admin.attendance_list', compact('today', 'attendances'));
     }
 
     public function detail()
     {
-        $headerType = 'admin_logged_in';
-        return view('admin.attendance_detail', compact('headerType'));
+        return view('admin.attendance_detail');
     }
 
     public function staffList()
     {
-        $headerType = 'admin_logged_in';
-        return view('admin.staff_list', compact('headerType'));
+        return view('admin.staff_list');
     }
 
     public function staffAttendance()
     {
-        $headerType = 'admin_logged_in';
-        return view('admin.attendance_staff', compact('headerType'));
+        return view('admin.attendance_staff');
     }
 }

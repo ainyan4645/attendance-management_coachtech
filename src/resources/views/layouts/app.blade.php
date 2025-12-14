@@ -12,18 +12,18 @@
 <body class="body-color">
     <header class="header-inner">
         <a href="/" class="header-logo-inner">
-            <img src="{{ asset('img/logo.svg') }}" alt="header-logo" class="header-logo_img">
+            <img src="{{ asset('img/logo.png') }}" alt="header-logo" class="header-logo_img">
         </a>
         @if (!isset($hideHeaderNav) || !$hideHeaderNav)
         <nav class="header-nav">
             <ul class="header-nav-inner">
-                {{-- 1. 未ログイン（guest） --}}
-                @if (!isset($headerType) || $headerType === 'guest')
-                    {{-- ログインページなど → ナビなし --}}
+                {{-- 未ログイン --}}
+                @if(!Auth::guard('web')->check() && !Auth::guard('admin')->check())
+                    {{-- ナビなし --}}
                 @endif
 
-                {{-- 2. スタッフログイン時 --}}
-                @if (isset($headerType) && $headerType === 'staff_logged_in')
+                {{-- 一般ユーザー --}}
+                @if(Auth::guard('web')->check())
                     <li class="header-nav-ttl">
                         <a class="header-nav-txt" href="{{ route('attendance') }}">勤怠</a>
                     </li>
@@ -36,12 +36,12 @@
                     <li class="header-nav-ttl">
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
-                            <button type="submit" class="header-nav-txt">ログアウト</button>
+                            <button type="submit" class="header-nav-logout">ログアウト</button>
                         </form>
                     </li>
                 @endif
 
-                {{-- 3. スタッフ退勤後 --}}
+                {{-- スタッフ退勤後 --}}
                 @if (isset($headerType) && $headerType === 'staff_after_clockout')
                     <li class="header-nav-ttl">
                         <a class="header-nav-txt" href="{{ route('attendance_list') }}">今月の出勤一覧</a>
@@ -52,15 +52,15 @@
                     <li class="header-nav-ttl">
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
-                            <button type="submit" class="header-nav-txt">ログアウト</button>
+                            <button type="submit" class="header-nav-logout">ログアウト</button>
                         </form>
                     </li>
                 @endif
 
-                {{-- 4. 管理者ログイン時 --}}
-                @if (isset($headerType) && $headerType === 'admin_logged_in')
+                {{-- 管理者 --}}
+                @if (Auth::guard('admin')->check())
                     <li class="header-nav-ttl">
-                        <a class="header-nav-txt" href="{{ route('attendance_list') }}">勤怠一覧</a>
+                        <a class="header-nav-txt" href="{{ route('admin_attendance_list') }}">勤怠一覧</a>
                     </li>
                     <li class="header-nav-ttl">
                         <a class="header-nav-txt" href="{{ route('staff_list') }}">スタッフ一覧</a>
@@ -69,9 +69,9 @@
                         <a class="header-nav-txt" href="{{ route('admin_stamp_correction_list') }}">申請一覧</a>
                     </li>
                     <li class="header-nav-ttl">
-                        <form action="{{ route('logout') }}" method="POST">
+                        <form action="{{ route('admin.logout') }}" method="POST">
                             @csrf
-                            <button type="submit" class="header-nav-txt">ログアウト</button>
+                            <button type="submit" class="header-nav-logout">ログアウト</button>
                         </form>
                     </li>
                 @endif

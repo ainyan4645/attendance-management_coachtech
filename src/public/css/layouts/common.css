@@ -1,8 +1,8 @@
 .body-color {
     /* 非ログイン */
-    background-color: #ffffff;
+    /* background-color: #ffffff; */
     /* ログイン時 */
-    /* background-color: #f0eff2; */
+    background-color: #f0eff2;
 }
 
 .header-inner {
@@ -11,7 +11,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-left: 40px;
+    padding-left: 25px;
     padding-right: 25px;
     position: fixed;
     top: 0;
@@ -27,6 +27,8 @@
 
 .header-logo_img {
     width: 100%;
+    height: 100%;
+    object-fit: fill;
 }
 
 .header-nav {
@@ -39,25 +41,31 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 40px;
 }
 
 .header-nav-ttl {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 135px;
-    margin-right: 10px;
 }
 
-.header-nav-txt {
+.header-nav-txt,
+.header-nav-logout {
     display: inline-flex; /* 縦中央揃え */
     align-items: center;
     justify-content: center;
     text-decoration: none;
     font-size: 24px;
+    font-weight: bold;
     color: #ffffff;
     background: none;
     border: none;
     padding: 0;
     cursor: pointer;
+}
+
+.header-nav-logout {
+    margin-left: 15px;
+    margin-right: 20px;
 }
