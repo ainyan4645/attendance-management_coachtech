@@ -11,9 +11,9 @@
 </head>
 <body class="body-color">
     <header class="header-inner">
-        <a href="/" class="header-logo-inner">
+        <div class="header-logo-inner">
             <img src="{{ asset('img/logo.png') }}" alt="header-logo" class="header-logo_img">
-        </a>
+        </div>
         @if (!isset($hideHeaderNav) || !$hideHeaderNav)
         <nav class="header-nav">
             <ul class="header-nav-inner">
