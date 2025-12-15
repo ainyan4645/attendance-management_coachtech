@@ -1,0 +1,44 @@
+.verify-contents {
+    display: flex;
+    justify-content: center;
+    min-height: calc(100vh - 60px); /* ヘッダー高さ分を引く */
+}
+
+.verify-box {
+    text-align: center;
+}
+
+.verify-text {
+    font-size: 24px;
+    font-weight: bold;
+    color: #000000;
+    margin: 315px auto 60px;
+}
+
+.verify-form {
+    display: flex;
+    justify-content: center;
+    height: 70px;
+    margin-bottom: 50px;
+}
+
+.verify-btn {
+    width: 255px;
+    height: 100%;
+    background-color: #d9d9d9;
+    border: solid 1px #000000;
+    border-radius: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #000000;
+    cursor: pointer;
+}
+
+.resend-link {
+    background: none;
+    border: none;
+    color: #0073cc;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 15px;
+}

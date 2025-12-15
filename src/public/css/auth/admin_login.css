@@ -1,0 +1,46 @@
+.contents {
+    top: 80px;
+    width: 680px;
+    margin: 80px auto 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contents-ttl {
+    margin: 110px auto 70px;
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.admin-login {
+    width: 100%;
+}
+
+.email,
+.pwd {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.email-input,
+.pwd-input {
+    width: 100%;
+    height: 60px;
+    font-size: 24px;
+    padding: 10px;
+    margin-bottom: 70px;
+}
+
+.login-btn {
+    width: 100%;
+    height: 60px;
+    border: none;
+    border-radius: 5px;
+    background-color: #000000;
+    color: #ffffff;
+    font-size: 26px;
+    font-weight: bold;
+    margin: 35px 0px 15px;
+}
