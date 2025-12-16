@@ -6,6 +6,11 @@
 
 @section('content')
 <main class="verify-contents">
+    @if (session('status'))
+        <div class="status-message">
+            {{ session('status') }}
+        </div>
+    @endif
     <div class="verify-box">
         <p class="verify-text">登録していただいたメールアドレスに認証メールを送付しました。<br>メール認証を完了してください。</p>
 

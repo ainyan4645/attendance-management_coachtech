@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
 use App\Actions\Fortify\CreateNewUser;
-use Illuminate\Auth\Events\Registered;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -27,8 +26,8 @@ class AuthController extends Controller
         $creator = new CreateNewUser();
         $user = $creator->create($validated);
 
-        // FortifyがRegister通知 → 認証メール送信（Mailtrapへ）
-        event(new Registered($user));
+        // 認証メール送信（Mailtrapへ）
+        $user->sendEmailVerificationNotification();
 
         // ログインして認証待ちページへ
         Auth::login($user);
@@ -45,7 +44,7 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (!Auth::attempt($credentials)) {
-            return back()->withErrors(['email' => 'ログイン情報が正しくありません。'])->withInput();
+            return back()->withErrors(['email' => 'ログイン情報が登録されていません'])->withInput();
         }
 
         // メール未認証のチェック

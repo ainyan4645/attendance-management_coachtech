@@ -1,7 +1,14 @@
 .verify-contents {
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    min-height: calc(100vh - 60px); /* ヘッダー高さ分を引く */
+    min-height: calc(100vh); /* ヘッダー高さ分を引く */
+}
+
+.status-message {
+    background-color: #6de3a4;
+    font-size: 16px;
+    padding: 5px 20px;
 }
 
 .verify-box {
