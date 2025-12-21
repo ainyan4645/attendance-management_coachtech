@@ -1,8 +1,8 @@
 .verify-contents {
+    margin-top: 80px;
+    min-height: calc(100vh - 80px);
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    min-height: calc(100vh); /* ヘッダー高さ分を引く */
 }
 
 .status-message {
@@ -12,14 +12,19 @@
 }
 
 .verify-box {
-    text-align: center;
+    flex: 1;  /* 残り領域を占有 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .verify-text {
     font-size: 24px;
     font-weight: bold;
     color: #000000;
-    margin: 315px auto 60px;
+    text-align: center;
+    margin-bottom: 60px;
 }
 
 .verify-form {
