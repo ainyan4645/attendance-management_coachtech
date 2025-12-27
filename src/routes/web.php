@@ -51,6 +51,12 @@ Route::prefix('admin')->group(function () {
 // 一般ユーザー
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/attendance', [StaffAttendanceController::class, 'index'])->name('attendance');
+    Route::prefix('attendance')->name('attendance.')->group(function () {
+        Route::post('/clock-in',  [StaffAttendanceController::class, 'clockIn'])->name('clockIn');
+        Route::post('/break-start',[StaffAttendanceController::class, 'breakStart'])->name('breakStart');
+        Route::post('/break-end',  [StaffAttendanceController::class, 'breakEnd'])->name('breakEnd');
+        Route::post('/clock-out', [StaffAttendanceController::class, 'clockOut'])->name('clockOut');
+    });
     Route::get('/attendance/list', [StaffAttendanceController::class, 'list'])->name('attendance_list');
     Route::get('/attendance/detail', [StaffAttendanceController::class, 'detail'])->name('attendance_detail');
     Route::get('/stamp_correction_request/list', [StaffStampController::class, 'list'])->name('stamp_correction_list');

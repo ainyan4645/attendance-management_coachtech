@@ -31,6 +31,11 @@
     font-weight: bold;
 }
 
+.attendance-register{
+    display: flex;
+    gap: 80px;
+}
+
 .work-btn {
     width: 220px;
     height: 75px;
@@ -39,5 +44,17 @@
     font-size: 32px;
     font-weight: bold;
     color: #ffffff;
+    cursor: pointer;
+}
+
+.break-btn {
+    width: 220px;
+    height: 75px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    font-size: 32px;
+    font-weight: bold;
+    color: #000000;
+    border: none;
     cursor: pointer;
 }

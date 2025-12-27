@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Attendance extends Model
 {
@@ -38,5 +39,16 @@ class Attendance extends Model
     public function attendanceRequests()
     {
         return $this->hasMany(AttendanceRequest::class);
+    }
+
+
+    // 労働時間計算
+    public function calculateWorkMinutes(Carbon $clockOut): int
+    {
+        return max(
+            $this->clock_in->diffInMinutes($clockOut)
+            - $this->total_break_minutes,
+            0
+        );
     }
 }
