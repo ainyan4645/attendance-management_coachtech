@@ -20,7 +20,7 @@ class AdminAuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (!Auth::guard('admin')->attempt($credentials)) {
-            return back()->withErrors(['email' => 'ログイン情報が正しくありません。'])->withInput();
+            return back()->withErrors(['email' => 'ログイン情報が登録されていません'])->withInput();
         }
 
         // 管理者はメール認証なし

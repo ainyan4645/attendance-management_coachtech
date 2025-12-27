@@ -9,7 +9,7 @@
     <h1 class="contents-ttl">
         ログイン
     </h1>
-    <form class="login" action="/login" method="POST" novalidate>
+    <form class="login" action="{{ route('login') }}" method="POST" novalidate>
         @csrf
         <h2 class="email">
             メールアドレス

@@ -14,25 +14,47 @@
         <div class="header-logo-inner">
             <img src="{{ asset('img/logo.png') }}" alt="header-logo" class="header-logo_img">
         </div>
-        @if (!isset($hideHeaderNav) || !$hideHeaderNav)
+        @php
+            $showHeaderNav =
+                // 一般ユーザー（ログイン済・認証済）
+                (Auth::guard('web')->check() && Auth::user()->hasVerifiedEmail())
+                // 管理者
+                || Auth::guard('admin')->check();
+
+                // 退勤判定
+                $isFinished = $isFinished ?? false;
+        @endphp
+
+        @if ($showHeaderNav)
         <nav class="header-nav">
             <ul class="header-nav-inner">
-                {{-- 未ログイン --}}
-                @if(!Auth::guard('web')->check() && !Auth::guard('admin')->check())
-                    {{-- ナビなし --}}
-                @endif
 
-                {{-- 一般ユーザー --}}
+                {{-- ===================== --}}
+                {{-- 一般ユーザー（認証済） --}}
+                {{-- ===================== --}}
                 @if(Auth::guard('web')->check())
-                    <li class="header-nav-ttl">
-                        <a class="header-nav-txt" href="{{ route('attendance') }}">勤怠</a>
-                    </li>
-                    <li class="header-nav-ttl">
-                        <a class="header-nav-txt" href="{{ route('attendance_list') }}">勤怠一覧</a>
-                    </li>
-                    <li class="header-nav-ttl">
-                        <a class="header-nav-txt" href="">申請</a>
-                    </li>
+                    {{-- 退勤前 --}}
+                    @if(!$isFinished)
+                        <li class="header-nav-ttl">
+                            <a class="header-nav-txt" href="{{ route('attendance') }}">勤怠</a>
+                        </li>
+                        <li class="header-nav-ttl">
+                            <a class="header-nav-txt" href="{{ route('attendance_list') }}">勤怠一覧</a>
+                        </li>
+                        <li class="header-nav-ttl">
+                            <a class="header-nav-txt" href="">申請</a>
+                        </li>
+
+                    {{-- 退勤後 --}}
+                    @else
+                        <li class="header-nav-ttl">
+                            <a class="header-nav-txt" href="{{ route('attendance_list') }}">今月の出勤一覧</a>
+                        </li>
+                        <li class="header-nav-ttl">
+                            <a class="header-nav-txt" href="">申請一覧</a>
+                        </li>
+                    @endif
+
                     <li class="header-nav-ttl">
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
@@ -41,24 +63,10 @@
                     </li>
                 @endif
 
-                {{-- スタッフ退勤後 --}}
-                @if (isset($headerType) && $headerType === 'staff_after_clockout')
-                    <li class="header-nav-ttl">
-                        <a class="header-nav-txt" href="{{ route('attendance_list') }}">今月の出勤一覧</a>
-                    </li>
-                    <li class="header-nav-ttl">
-                        <a class="header-nav-txt" href="">申請一覧</a>
-                    </li>
-                    <li class="header-nav-ttl">
-                        <form action="{{ route('logout') }}" method="POST">
-                            @csrf
-                            <button type="submit" class="header-nav-logout">ログアウト</button>
-                        </form>
-                    </li>
-                @endif
-
+                {{-- ===================== --}}
                 {{-- 管理者 --}}
-                @if (Auth::guard('admin')->check())
+                {{-- ===================== --}}
+                @if(Auth::guard('admin')->check())
                     <li class="header-nav-ttl">
                         <a class="header-nav-txt" href="{{ route('admin_attendance_list') }}">勤怠一覧</a>
                     </li>

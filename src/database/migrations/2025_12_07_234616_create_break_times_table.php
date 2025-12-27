@@ -19,7 +19,7 @@ class CreateBreakTimesTable extends Migration
                 ->constrained()
                 ->onDelete('cascade');
             $table->dateTime('break_start');
-            $table->dateTime('break_end');
+            $table->dateTime('break_end')->nullable();
             $table->timestamps();
         });
     }

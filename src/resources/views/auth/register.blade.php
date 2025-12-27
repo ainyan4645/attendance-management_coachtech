@@ -31,13 +31,20 @@
             パスワード
         </h2>
         @error('password')
-        <div class="error">{{ $message }}</div>
+            @if ($message !== 'パスワードと一致しません')
+                <div class="error">{{ $message }}</div>
+            @endif
         @enderror
         <input type="password" name="password" class="pwd-input">
 
         <h2 class="pwd-confirm">
             パスワード確認
         </h2>
+        @error('password')
+            @if ($message === 'パスワードと一致しません')
+            <div class="error">{{ $message }}</div>
+            @endif
+        @enderror
         <input type="password" name="password_confirmation" class="pwd-confirm-input">
 
         <button class="register-btn" type="submit">登録する</button>

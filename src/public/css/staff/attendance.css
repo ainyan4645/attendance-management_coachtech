@@ -1,9 +1,10 @@
 .contents {
-    top: 80px;
-    margin-top: 290px;
+    margin-top: 80px;
+    min-height: calc(100vh - 80px); /* ヘッダーを除いた高さ */
     display: flex;
     flex-direction: column;
-    align-items: center;
+    justify-content: center; /* 縦中央 */
+    align-items: center;     /* 横中央 */
 }
 
 .tag {
@@ -30,6 +31,11 @@
     font-weight: bold;
 }
 
+.attendance-register{
+    display: flex;
+    gap: 80px;
+}
+
 .work-btn {
     width: 220px;
     height: 75px;
@@ -38,5 +44,17 @@
     font-size: 32px;
     font-weight: bold;
     color: #ffffff;
+    cursor: pointer;
+}
+
+.break-btn {
+    width: 220px;
+    height: 75px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    font-size: 32px;
+    font-weight: bold;
+    color: #000000;
+    border: none;
     cursor: pointer;
 }
