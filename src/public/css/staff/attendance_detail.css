@@ -1,0 +1,117 @@
+.attendance-detail {
+    top: 80px;
+    margin: 175px auto 165px;
+    width: 900px;
+    display: flex;
+    flex-direction: column;
+}
+
+.attendance-detail-ttl {
+    font-size: 30px;
+    font-weight: bold;
+    padding-left: 20px;
+    border-left: 8px solid #000000;
+    height: 40px;
+    margin-bottom: 55px;
+}
+
+.attendance-detail-table {
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 35px;
+}
+
+.attendance-detail-row {
+    border-bottom: 2px solid #e1e1e1;
+    height: 90px;
+    letter-spacing: 0.15em;
+    display: flex;
+    align-items: center;
+}
+
+.attendance-detail-row:last-child {
+    border-bottom: none;
+}
+
+.attendance-detail-label {
+    width: 335px;
+    padding-left: 65px;
+    color: #737373;
+}
+
+.attendance-detail-year {
+    width: 185px;
+    padding-left: 25px;
+}
+
+.attendance-detail-work,
+.attendance-detail-break {
+    display: flex;
+    align-items: center;
+    gap: 45px;
+}
+
+.attendance-detail-name,
+.attendance-detail-date {
+    padding-left: 25px;
+}
+
+.attendance-detail-value {
+    display: inline-block;
+}
+
+.attendance-detail-input {
+    height: 30px;
+    width: 105px;
+    border: 1px solid #e1e1e1;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0.15em;
+    font-family: inherit;
+}
+
+.attendance-detail-remark {
+    width: 315px;
+    min-height: 65px;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 0.15em;
+    font-family: inherit;
+    display: flex;
+}
+
+.attendance-detail-action {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.attendance-detail-pending {
+    color: #ff0000;
+    font-size: 18px;
+    letter-spacing: 0.15em;
+}
+
+.attendance-detail-submit {
+    height: 50px;
+    width: 130px;
+    background-color: #000000;
+    border-radius: 5px;
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.attendance-detail-error {
+    color: #ff0000;
+    font-size: 14px;
+    letter-spacing: 0.15em;
+    /* margin-top: 4px; */
+}

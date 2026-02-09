@@ -51,4 +51,17 @@ class Attendance extends Model
             0
         );
     }
+
+    // 分 → H:i 表記（例: 510 → 8:30）
+    public function formatMinutesToTime(?int $minutes): ?string
+    {
+        if ($minutes === null) {
+            return null;
+        }
+
+        $hours = intdiv($minutes, 60);
+        $mins  = $minutes % 60;
+
+        return sprintf('%d:%02d', $hours, $mins);
+    }
 }

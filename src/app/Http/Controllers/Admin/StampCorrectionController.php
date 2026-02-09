@@ -9,8 +9,7 @@ class StampCorrectionController extends Controller
 {
     public function list()
     {
-        $headerType = 'admin_logged_in';
-        return view('admin.stamp_correction_list', compact('headerType'));
+        return view('admin.stamp_correction_list');
     }
 
     public function approve()

@@ -58,8 +58,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/clock-out', [StaffAttendanceController::class, 'clockOut'])->name('clockOut');
     });
     Route::get('/attendance/list', [StaffAttendanceController::class, 'list'])->name('attendance_list');
-    Route::get('/attendance/detail', [StaffAttendanceController::class, 'detail'])->name('attendance_detail');
-    Route::get('/stamp_correction_request/list', [StaffStampController::class, 'list'])->name('stamp_correction_list');
+    Route::get('/attendance/detail/{id}', [StaffAttendanceController::class, 'detail'])->name('attendance_detail');
+    Route::post('/attendance/detail/{id}', [StaffStampController::class, 'update'])->name('attendance_update');
 });
 
 // 管理者
@@ -71,6 +71,9 @@ Route::middleware('auth:admin')->group(function () {
         Route::get('/attendance/staff', [AdminAttendanceController::class, 'staffAttendance'])->name('admin_attendance_staff');
         Route::get('/staff/list', [AdminAttendanceController::class, 'staffList'])->name('staff_list');
     });
-    Route::get('/stamp_correction_request/list', [AdminStampController::class, 'list'])->name('admin_stamp_correction_list');
     Route::get('/stamp_correction_request/approve', [AdminStampController::class, 'approve'])->name('admin_stamp_correction_approve');
 });
+
+// 共通URL
+Route::get('/stamp_correction_request/list', [StaffStampController::class, 'list'])
+->name('stamp_correction_list');

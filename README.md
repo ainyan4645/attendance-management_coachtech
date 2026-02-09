@@ -43,3 +43,14 @@ MAIL_FROM_NAME="${APP_NAME}"
 
 ## 機能確認用ユーザ
 
+
+## 自動勤怠補正について
+
+日付を跨いだ未完了勤怠（退勤未打刻・休憩未終了）については、
+Laravel Scheduler を利用した定期処理を想定しています。
+
+本案件は模擬案件のため cron 設定は行っていませんが、
+以下のコマンドを手動実行することで動作確認が可能です。
+
+```bash
+php artisan attendance:fix-overnight

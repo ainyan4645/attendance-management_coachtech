@@ -1,0 +1,115 @@
+.request {
+    top: 80px;
+    margin: 170px auto 115px;
+    width: 900px;
+    display: flex;
+    flex-direction: column;
+}
+
+.request-ttl {
+    font-size: 30px;
+    font-weight: bold;
+    padding-left: 20px;
+    border-left: 8px solid #000000;
+    height: 40px;
+    margin-bottom: 60px;
+}
+
+/* タブ部分 */
+.tab-inner {
+    border-bottom: 1px solid #000000;
+    margin-bottom: 45px;
+}
+
+.tabs {
+    display: flex;
+    gap: 100px;
+    margin: 0px 55px;
+    padding-bottom: 15px;
+}
+
+.tab {
+    font-size: 16px;
+    color: #000000;
+    background: none;
+    border: none;
+    padding: 0px;
+}
+
+.tab.active {
+    font-weight: bold;
+    background: none;
+    border: none;
+    padding: 0px;
+}
+
+.request-table {
+    width: 100%;
+    table-layout: fixed;    /*幅固定(データはヘッダーに倣う)*/
+    border-collapse: collapse;
+    background-color: #ffffff;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #737373;
+}
+
+.table-row-header {
+    border-bottom: 3px solid #e1e1e1;
+    height: 45px;
+    letter-spacing: 0.15em;
+    text-align: left;
+}
+
+.table-state {
+    text-align: center;
+    width: 180px;
+}
+
+.table-name {
+    width: 125px;
+}
+
+.table-target-date {
+    width: 165px;
+}
+
+.table-reason {
+    width: 155px;
+}
+
+.table-request-date {
+    width: 155px;
+}
+
+.table-row {
+    border-bottom: 2px solid #e1e1e1;
+    height: 45px;
+    text-align: left;
+}
+
+.table-row:last-of-type {
+    border-bottom: none;
+}
+
+.table-cell-state {
+    letter-spacing: 0.15em;
+    text-align: center;
+}
+
+.table-cell {
+    letter-spacing: 0.15em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.table-cell-detail {
+    background: none;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 0px;
+    letter-spacing: 0.15em;
+    cursor: pointer;
+}

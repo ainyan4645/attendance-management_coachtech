@@ -11,15 +11,16 @@ class AttendanceRequest extends Model
 
     protected $fillable = [
         'attendance_id',
+        'target_date',
         'user_id',
         'admin_id',
         'status',
-        'request_reason',
         'requested_at',
         'approved_at',
     ];
 
     protected $casts = [
+        'target_date'  => 'date',
         'requested_at' => 'datetime',
         'approved_at' => 'datetime',
     ];
@@ -42,5 +43,12 @@ class AttendanceRequest extends Model
     public function details()
     {
         return $this->hasMany(AttendanceRequestDetail::class);
+    }
+
+    public function getRemarkAttribute()
+    {
+        return optional(
+            $this->details->firstWhere('field', 'remark')
+        )->new_value;
     }
 }

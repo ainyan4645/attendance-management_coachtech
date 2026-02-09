@@ -18,15 +18,16 @@
     font-size: 18px;
     font-weight: bold;
     color: #696969;
+    letter-spacing: 0.15em;
 }
 
 .date {
-    margin-bottom: 30px;
+    margin: 0px 0px 30px;
     font-size: 40px;
 }
 
 .time {
-    margin-bottom: 85px;
+    margin: 0px 0px 85px;
     font-size: 80px;
     font-weight: bold;
 }
@@ -43,6 +44,7 @@
     border-radius: 20px;
     font-size: 32px;
     font-weight: bold;
+    letter-spacing: 0.15em;
     color: #ffffff;
     cursor: pointer;
 }
@@ -54,7 +56,16 @@
     border-radius: 20px;
     font-size: 32px;
     font-weight: bold;
+    letter-spacing: 0.15em;
     color: #000000;
     border: none;
     cursor: pointer;
+}
+
+.thanks-message {
+    font-size: 26px;
+    font-weight: bold;
+    letter-spacing: 0.15em;
+    align-self: flex-start;
+    margin-top: 15px;
 }

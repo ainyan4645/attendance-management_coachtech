@@ -15,15 +15,17 @@ class CreateAttendanceRequestsTable extends Migration
     {
         Schema::create('attendance_requests', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('attendance_id')->constrained()->onDelete('cascade');
+            $table->foreignId('attendance_id')->nullable()->constrained()->nullOnDelete();      // 既存勤怠がない場合: null
+            $table->date('target_date');        // 修正対象日
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('admin_id')->nullable()->constrained()->nullOnDelete();
             $table->enum('status', ['pending', 'approved'])
                 ->default('pending');
-            $table->text('request_reason')->nullable();
             $table->timestamp('requested_at')->useCurrent();
             $table->timestamp('approved_at')->nullable();
             $table->timestamps();
+
+            $table->unique(['user_id', 'target_date', 'status']);       // 同一日に pending を複数出させない
         });
     }
 
