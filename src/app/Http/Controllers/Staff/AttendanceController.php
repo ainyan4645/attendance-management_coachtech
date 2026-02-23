@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Attendance\AttendanceStoreRequest;
 use App\Models\Attendance;
 use App\Models\BreakTime;
+use App\Models\AttendanceRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 
 class AttendanceController extends Controller
 {
@@ -116,31 +118,78 @@ class AttendanceController extends Controller
 
     public function list(Request $request)
     {
-        $headerType = 'staff_logged_in';
+        // 🔽 追加（未退勤自動補完）
+        Attendance::autoCloseUnfinished(auth()->id());
 
-        // 現在の月
+        // 表示対象の月（YYYY-MM）
         $currentMonth = $request->month
-            ? Carbon::parse($request->month . '-01')
+            ? Carbon::createFromFormat('Y-m', $request->month)->startOfMonth()
             : Carbon::now()->startOfMonth();
 
+        // 前月・翌月（リンク用）
         $prevMonth = $currentMonth->copy()->subMonth()->format('Y-m');
         $nextMonth = $currentMonth->copy()->addMonth()->format('Y-m');
 
-        // まだモデルがないのでダミー（空配列）
-        $attendances = [];
+        // 勤怠取得（ログインユーザー分のみ）
+        $attendances = Attendance::where('user_id', auth()->id())
+            ->whereBetween('date', [
+                $currentMonth->copy()->startOfMonth(),
+                $currentMonth->copy()->endOfMonth(),
+            ])
+            ->get()
+            ->keyBy(fn ($a) => $a->date->toDateString());
+
+        // 表示用：月初〜月末の日付一覧
+        $dates = CarbonPeriod::create(
+            $currentMonth->copy()->startOfMonth(),
+            $currentMonth->copy()->endOfMonth()
+        );
 
         return view('staff.attendance_list', compact(
-            'headerType',
             'currentMonth',
             'prevMonth',
             'nextMonth',
+            'dates',
             'attendances'
         ));
     }
 
-    public function detail()
+    public function detail(int $id, Request $request)
     {
-        $headerType = 'staff_logged_in';
-        return view('staff.attendance_detail', compact('headerType'));
+        /* hidden の date をセッションに保存 */
+        if ($request->has('date')) {
+            session(['attendance_detail_date' => $request->date]);
+        }
+
+        $date = session('attendance_detail_date');
+
+        if (!$date) {
+            // 日付が取得できない場合は不正アクセス扱い
+            abort(404);
+        }
+
+        $date = Carbon::parse($date);
+
+        /* 勤怠取得（存在しない場合は null） */
+        $attendance = $id === 0
+            ? null
+            : Attendance::where('id', $id)
+                ->where('user_id', auth()->id())
+                ->firstOrFail();
+
+        /* pending判定 */
+        $pendingRequest = AttendanceRequest::where('user_id', auth()->id())
+            ->where('target_date', $date)
+            ->where('status', 'pending')
+            ->with('details')
+            ->latest()
+            ->first();
+
+        return view('staff.attendance_detail', [
+            'attendance' => $attendance,
+            'date' => $date,
+            'hasPendingRequest' => (bool) $pendingRequest,
+            'pendingRequest'    => $pendingRequest,
+        ]);
     }
 }

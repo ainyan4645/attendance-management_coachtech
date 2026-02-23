@@ -7,47 +7,67 @@
 @section('content')
 <main class="attendance">
     <h2 class="attendance-ttl">
-        {{ $today->isoFormat('YYYY年M月D日') }}の勤怠
+        {{ $date->isoFormat('YYYY年M月D日') }}の勤怠
     </h2>
 
     <div class="attendance-month-nav">
-        <a href="" class="nav-btn">
+        <a href="{{ route('admin_attendance_list', ['date' => $date->copy()->subDay()->toDateString()]) }}" class="nav-btn">
             <img src="{{ asset('img/left.png')}}" alt="back" class="nav-arrow-left">
-            <span class="nav-last">前月</span>
+            <span class="nav-last">前日</span>
         </a>
 
         <div class="month-display">
             <img src="{{ asset('img/calendar.png') }}" alt="calendar" class="month-display-img">
-            {{ $today->isoFormat('YYYY/MM/DD') }}
+            {{ $date->isoFormat('YYYY/MM/DD') }}
         </div>
 
-        <a href="" class="nav-btn">
-            <span class="nav-next">翌月</span>
+        <a href="{{ route('admin_attendance_list', ['date' => $date->copy()->addDay()->toDateString()]) }}" class="nav-btn">
+            <span class="nav-next">翌日</span>
             <img src="{{ asset('img/right.png')}}" alt="next" class="nav-arrow-right">
         </a>
     </div>
 
     <table class="attendance-table">
-        <thead  class="table-header">
-            <tr>
-                <th>名前</th>
-                <th>出勤</th>
-                <th>退勤</th>
-                <th>休憩</th>
-                <th>合計</th>
-                <th>詳細</th>
+        <thead>
+            <tr class="table-row-header">
+                <th class="table-name">名前</th>
+                <th class="table-clock-in">出勤</th>
+                <th class="table-clock-out">退勤</th>
+                <th class="table-break">休憩</th>
+                <th class="table-total">合計</th>
+                <th class="table-detail">詳細</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($attendances as $attendance)
+        @foreach ($attendances as $attendance)
             <tr class="table-row">
-                <td>{{ $attendance->date->format('m/d(D)') }}</td>
-                <td>{{ $attendance->start_time }}</td>
-                <td>{{ $attendance->end_time }}</td>
-                <td>{{ $attendance->break_time }}</td>
-                <td>{{ $attendance->total_time }}</td>
+                <td class="table-cell-name">
+                    {{ $attendance->user->name }}
+                </td>
+                <td class="table-cell">
+                    {{ optional($attendance->clock_in)->format('H:i') }}
+                </td>
+                <td class="table-cell">
+                    {{ optional($attendance->clock_out)->format('H:i') }}
+                </td>
+                <td class="table-cell">
+                    {{ $attendance->formatMinutesToTime($attendance->total_break_minutes) }}
+                </td>
+                <td class="table-cell">
+                    {{ $attendance->formatMinutesToTime($attendance->total_work_minutes) }}
+                </td>
                 <td>
-                    <a href="" class="detail-link">詳細</a>
+                    <form
+                        action="{{ route('admin_attendance_detail', ['id' => $attendance->id]) }}"
+                        method="GET"
+                    >
+                    @csrf
+                        <input type="hidden" name="date" value="{{ $date->toDateString() }}">
+                        <input type="hidden" name="return_url" value="{{ url()->current() }}">
+                        <button type="submit" class="table-cell-detail">
+                            詳細
+                        </button>
+                    </form>
                 </td>
             </tr>
             @endforeach

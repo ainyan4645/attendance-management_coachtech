@@ -1,0 +1,74 @@
+.staff {
+    top: 80px;
+    margin: 180px auto 30px;
+    width: 900px;
+    display: flex;
+    flex-direction: column;
+}
+
+.staff-ttl {
+    font-size: 30px;
+    font-weight: bold;
+    padding-left: 20px;
+    border-left: 8px solid #000000;
+    height: 40px;
+    margin-bottom: 100px;
+}
+
+.staff-table {
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #737373;
+}
+
+.table-row-header {
+    border-bottom: 3px solid #e1e1e1;
+    height: 45px;
+    letter-spacing: 0.15em;
+}
+
+.table-name {
+    text-align: center;
+    width: 300px;
+}
+
+.table-mail {
+    text-align: center;
+    width: 335px;
+}
+
+.table-attendance {
+    padding-right: 20px;
+    text-align: center;
+}
+
+.table-row {
+    border-bottom: 2px solid #e1e1e1;
+    height: 45px;
+    text-align: center;
+}
+
+.table-row:last-child {
+    border-bottom: none;
+}
+
+.table-cell-name {
+    letter-spacing: 0.15em;
+}
+
+.table-cell {
+    letter-spacing: 0.15em;
+}
+
+.table-cell-detail {
+    text-decoration: none;
+    color: #000000;
+    font-size: 16px;
+    font-weight: bold;
+    padding-right: 20px;
+    letter-spacing: 0.15em;
+    cursor: pointer;
+}

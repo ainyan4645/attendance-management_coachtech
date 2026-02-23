@@ -82,13 +82,10 @@ class AttendanceRequestsTableSeeder extends Seeder
                 ->where('date', $req['date'])
                 ->first();
 
-            if (!$attendance) {
-                continue;
-            }
-
             // 親：attendance_requests
             $attendanceRequest = AttendanceRequest::create([
-                'attendance_id' => $attendance->id,
+                'attendance_id' => $attendance?->id,
+                'target_date'   => $req['date'],
                 'user_id' => $user->id,
                 'status' => 'pending',
                 'requested_at' => Carbon::parse($req['requested_at']),
