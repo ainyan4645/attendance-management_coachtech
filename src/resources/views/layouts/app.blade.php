@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ asset('css/layouts/common.css') }}">
     @yield('css')
 </head>
-<body class="body-color">
+<body class="{{ Auth::check() || Auth::guard('admin')->check() ? 'body-login' : 'body-guest' }}">
     <header class="header-inner">
         <div class="header-logo-inner">
             <img src="{{ asset('img/logo.png') }}" alt="header-logo" class="header-logo_img">

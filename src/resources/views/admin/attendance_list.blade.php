@@ -17,7 +17,19 @@
         </a>
 
         <div class="month-display">
-            <img src="{{ asset('img/calendar.png') }}" alt="calendar" class="month-display-img">
+            <form method="GET" action="{{ route('admin_attendance_list') }}">
+                <label for="date-picker">
+                    <img src="{{ asset('img/calendar.png') }}" alt="calendar" class="month-display-img">
+                </label>
+                <input
+                    type="date"
+                    id="date-picker"
+                    name="date"
+                    value="{{ $date->toDateString() }}"
+                    onchange="this.form.submit()"
+                    class="month-display-picker"
+                >
+            </form>
             {{ $date->isoFormat('YYYY/MM/DD') }}
         </div>
 

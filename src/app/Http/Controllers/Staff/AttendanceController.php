@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Attendance\AttendanceStoreRequest;
 use App\Models\Attendance;
 use App\Models\BreakTime;
 use App\Models\AttendanceRequest;
@@ -41,7 +40,7 @@ class AttendanceController extends Controller
         return view('staff.attendance', compact('today', 'now', 'status','isFinished'));
     }
 
-    public function clockIn(AttendanceStoreRequest $request)
+    public function clockIn(Request $request)
     {
         Attendance::create([
             'user_id'  => auth()->id(),
@@ -52,7 +51,7 @@ class AttendanceController extends Controller
         return redirect()->route('attendance');
     }
 
-    public function breakStart(AttendanceStoreRequest $request)
+    public function breakStart(Request $request)
     {
         $attendance = Attendance::where('user_id', auth()->id())
             ->whereDate('date', now())
@@ -66,7 +65,7 @@ class AttendanceController extends Controller
         return redirect()->route('attendance');
     }
 
-    public function breakEnd(AttendanceStoreRequest $request)
+    public function breakEnd(Request $request)
     {
         $attendance = Attendance::where('user_id', auth()->id())
             ->whereDate('date', now())
@@ -96,7 +95,7 @@ class AttendanceController extends Controller
         return redirect()->route('attendance');
     }
 
-    public function clockOut(AttendanceStoreRequest $request)
+    public function clockOut(Request $request)
     {
         $attendance = Attendance::where('user_id', auth()->id())
             ->whereDate('date', now())

@@ -46,7 +46,7 @@
                     {{ $request->remark }}
                 </td>
                 <td>
-                    {{ $request->created_at->format('Y/m/d') }}
+                    {{ $request->requested_at->format('Y/m/d') }}
                 </td>
                 <td>
                     <form
@@ -78,7 +78,7 @@
                     {{ $request->remark }}
                 </td>
                 <td>
-                    {{ $request->created_at->format('Y/m/d') }}
+                    {{ $request->requested_at->format('Y/m/d') }}
                 </td>
                 <td>
                     <form

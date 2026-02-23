@@ -7,7 +7,7 @@
 @section('content')
 <main class="attendance-detail">
     <h2 class="attendance-detail-ttl">勤怠詳細</h2>
-    <form action="{{ route('attendance_update', ['id' => $attendance->id ?? 0]) }}" method="POST">
+    <form action="{{ route('attendance_correction', ['id' => $attendance->id ?? 0]) }}" method="POST">
         @csrf
         <table class="attendance-detail-table">
             <tbody>

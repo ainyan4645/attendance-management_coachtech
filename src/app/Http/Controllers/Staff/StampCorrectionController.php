@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\AttendanceCorrectionRequest;
 use Illuminate\Support\Facades\DB;
 use App\Models\Attendance;
@@ -14,7 +12,7 @@ use Carbon\Carbon;
 
 class StampCorrectionController extends Controller
 {
-    public function update(AttendanceCorrectionRequest $request, int $id)
+    public function correction(AttendanceCorrectionRequest $request, int $id)
     {
         $user = auth()->user();
 

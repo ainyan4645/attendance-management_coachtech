@@ -1,7 +1,9 @@
-.body-color {
-    /* 非ログイン */
-    /* background-color: #ffffff; */
-    /* ログイン時 */
+/* 未ログイン */
+.body-guest {
+    background-color: #ffffff;
+}
+/* ログイン時 */
+.body-login {
     background-color: #f0eff2;
 }
 

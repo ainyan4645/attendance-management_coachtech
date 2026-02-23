@@ -26,11 +26,17 @@ class UsersTableSeeder extends Seeder
         ];
 
         foreach ($users as $user) {
+            $password = 'password';
+
+            if ($user['email'] === 'reina.n@coachtech.com') {
+                $password = 'reina1234'; //　固定パスワード
+            }
+
             User::create([
                 'name' => $user['name'],
                 'email' => $user['email'],
                 'email_verified_at' => now(),
-                'password' => Hash::make('password'),
+                'password' => Hash::make($password),
             ]);
         }
     }

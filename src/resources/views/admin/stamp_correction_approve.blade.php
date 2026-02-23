@@ -57,6 +57,7 @@
                 @php
                     $attendanceBreakCount = $attendance?->breakTimes->count() ?? 0;
 
+                    // pending 側の休憩申請インデックス
                     $pendingIndexes = $pendingRequest?->details
                         ->filter(fn($d) => str_starts_with($d->field, 'break_start_'))
                         ->map(function ($d) {
@@ -65,15 +66,18 @@
 
                     $pendingMaxIndex = $pendingIndexes->max() ?? 0;
 
-                    $displayCount = max($attendanceBreakCount, $pendingMaxIndex);
+                    // ★ ここを修正：元の勤怠 + 1 を最低表示枠にする
+                    $displayCount = max($attendanceBreakCount + 1, $pendingMaxIndex);
                 @endphp
 
                 @for ($i = 0; $i < $displayCount; $i++)
                     @php
                         $label = $i === 0 ? '休憩' : '休憩' . ($i + 1);
 
+                        // 元の勤怠の休憩を取得（存在しなければ null）
                         $attendanceBreak = $attendance?->breakTimes[$i] ?? null;
 
+                        // 申請側の休憩
                         $pendingStart = optional(
                             $pendingRequest?->details->firstWhere('field', 'break_start_' . ($i + 1))
                         )->new_value;

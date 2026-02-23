@@ -24,8 +24,6 @@ class CreateAttendanceRequestsTable extends Migration
             $table->timestamp('requested_at')->useCurrent();
             $table->timestamp('approved_at')->nullable();
             $table->timestamps();
-
-            $table->unique(['user_id', 'target_date', 'status']);       // 同一日に pending を複数出させない
         });
     }
 

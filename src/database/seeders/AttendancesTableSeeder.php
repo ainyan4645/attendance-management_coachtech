@@ -17,9 +17,10 @@ class AttendancesTableSeeder extends Seeder
      */
     public function run()
     {
-        $date = Carbon::create(2023, 6, 1);
+        $baseMonth = now()->subMonth(2); // 先々月
+        $date = $baseMonth->copy()->startOfMonth();
 
-        // 6/1 全員分
+        // 1日 全員分
         $users = User::whereIn('email', [
             'taro.y@coachtech.com',
             'issei.m@coachtech.com',
@@ -45,11 +46,11 @@ class AttendancesTableSeeder extends Seeder
             ]);
         }
 
-        // 6/2 山田花子の勤怠
+        // 2日 山田花子の勤怠
         $hanako = User::where('email', 'hanako.y@coachtech.com')->first();
 
         if ($hanako) {
-            $date = Carbon::create(2023, 6, 2);
+            $date = $baseMonth->copy()->day(2);
 
             $attendance = Attendance::updateOrCreate(
                 [
@@ -71,16 +72,18 @@ class AttendancesTableSeeder extends Seeder
             ]);
         }
 
-        // 西 伶奈：6月（4,7,17,25日以外）
+        // 西 伶奈：（4,7,17,25日以外）
+        $daysInMonth = $baseMonth->daysInMonth;
+
         $excludeDays = [4, 7, 17, 25];
         $reina = User::where('email', 'reina.n@coachtech.com')->first();
 
-        for ($day = 1; $day <= 30; $day++) {
+        for ($day = 1; $day <= $daysInMonth; $day++) {
             if (in_array($day, $excludeDays)) {
                 continue;
             }
 
-            $date = Carbon::create(2023, 6, $day);
+            $date = $baseMonth->copy()->day($day);
 
             $attendance = Attendance::updateOrCreate(
                 [

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Common;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\AttendanceRequest;
-use Illuminate\Http\Request;
 
 class StampCorrectionController extends Controller
 {

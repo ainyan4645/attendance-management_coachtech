@@ -18,11 +18,72 @@ class AttendanceRequestsTableSeeder extends Seeder
      */
     public function run()
     {
+        $baseMonth = now()->subMonth(2);    // 勤怠対象：先々月
+        $lastMonth       = now()->subMonth();   // 先月
+        $thisMonth       = now();               // 当月
+
         $requests = [
             [
                 'email' => 'reina.n@coachtech.com',
-                'date' => '2023-06-01',
-                'requested_at' => '2023-06-02 10:00:00',
+                'date' => $baseMonth->copy()->day(1)->toDateString(),
+                'requested_at' => $baseMonth->copy()->day(2)->setTime(10, 0),
+                'status' => 'pending',
+                'details' => [
+                    [
+                        'field' => 'clock_in',
+                        'old' => '09:00',
+                        'new' => '09:30',
+                    ],
+                    [
+                        'field' => 'remark',
+                        'old' => null,
+                        'new' => '遅延のため',
+                    ],
+                ],
+            ],
+            [
+                'email' => 'reina.n@coachtech.com',
+                'date' => $baseMonth->copy()->day(2)->toDateString(),
+                'requested_at' => $baseMonth->copy()->day(4)->setTime(11, 0),
+                'status' => 'pending',
+                'details' => [
+                    [
+                        'field' => 'clock_in',
+                        'old' => '09:00',
+                        'new' => '09:30',
+                    ],
+                    [
+                        'field' => 'remark',
+                        'old' => null,
+                        'new' => '遅延のため',
+                    ],
+                ],
+            ],
+            [
+                'email' => 'reina.n@coachtech.com',
+                'date' => $baseMonth->copy()->day(3)->toDateString(),
+                'requested_at' => $baseMonth->copy()->day(6)->setTime(12, 0),
+                'status' => 'approved',
+                'approved_at' => $thisMonth->copy()->day(1),
+                'details' => [
+                    [
+                        'field' => 'clock_in',
+                        'old' => '09:00',
+                        'new' => '09:30',
+                    ],
+                    [
+                        'field' => 'remark',
+                        'old' => null,
+                        'new' => '遅延のため',
+                    ],
+                ],
+            ],
+            [
+                'email' => 'reina.n@coachtech.com',
+                'date' => $baseMonth->copy()->day(5)->toDateString(),
+                'requested_at' => $baseMonth->copy()->day(6)->setTime(12, 0),
+                'status' => 'approved',
+                'approved_at' => $thisMonth->copy()->day(3),
                 'details' => [
                     [
                         'field' => 'clock_in',
@@ -38,8 +99,9 @@ class AttendanceRequestsTableSeeder extends Seeder
             ],
             [
                 'email' => 'taro.y@coachtech.com',
-                'date' => '2023-06-01',
-                'requested_at' => '2023-08-02 09:00:00',
+                'date' => $baseMonth->copy()->day(1)->toDateString(),
+                'requested_at' => $thisMonth->copy()->day(2)->setTime(9, 0),
+                'status' => 'pending',
                 'details' => [
                     [
                         'field' => 'clock_in',
@@ -55,8 +117,9 @@ class AttendanceRequestsTableSeeder extends Seeder
             ],
             [
                 'email' => 'hanako.y@coachtech.com',
-                'date' => '2023-06-02',
-                'requested_at' => '2023-07-02 14:00:00',
+                'date' => $baseMonth->copy()->day(2)->toDateString(),
+                'requested_at' => $lastMonth->copy()->day(2)->setTime(14, 0),
+                'status' => 'pending',
                 'details' => [
                     [
                         'field' => 'clock_in',
@@ -87,8 +150,9 @@ class AttendanceRequestsTableSeeder extends Seeder
                 'attendance_id' => $attendance?->id,
                 'target_date'   => $req['date'],
                 'user_id' => $user->id,
-                'status' => 'pending',
                 'requested_at' => Carbon::parse($req['requested_at']),
+                'status'        => $req['status'] ?? 'pending',
+                'approved_at'   => isset($req['approved_at']) ? Carbon::parse($req['approved_at']) : null,
             ]);
 
             // 子：attendance_request_details

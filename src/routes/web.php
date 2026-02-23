@@ -42,7 +42,7 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/email/verify', [AuthController::class, 'notice'])->name('verification.notice');
     Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verify'])->middleware('signed')->name('verification.verify');
-    Route::post('/email/verify/auto', [AuthController::class, 'Verify'])
+    Route::post('/email/verify/auto', [AuthController::class, 'verify'])
         ->name('verification.auto');// ボタン押下で自動認証
     Route::post('/email/resend', [AuthController::class, 'resend'])->middleware('throttle:6,1')->name('verification.send');
 });
@@ -75,7 +75,7 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     });
     Route::get('/attendance/list', [StaffAttendanceController::class, 'list'])->name('attendance_list');
     Route::get('/attendance/detail/{id}', [StaffAttendanceController::class, 'detail'])->name('attendance_detail');
-    Route::post('/attendance/detail/{id}', [StaffStampController::class, 'update'])->name('attendance_update');
+    Route::post('/attendance/detail/{id}', [StaffStampController::class, 'correction'])->name('attendance_correction');
 });
 
 // 共通URL

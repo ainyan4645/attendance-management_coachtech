@@ -13,8 +13,6 @@ use App\Models\User;
 use App\Http\Requests\AttendanceCorrectionRequest;
 use Illuminate\Support\Facades\DB;
 
-use Illuminate\Support\Collection;
-
 
 class AttendanceController extends Controller
 {
