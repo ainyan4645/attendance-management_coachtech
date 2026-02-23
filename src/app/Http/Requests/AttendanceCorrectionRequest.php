@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Attendance;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Validator;
@@ -69,27 +69,48 @@ class AttendanceCorrectionRequest extends FormRequest
             $breakStarts = $this->break_start ?? [];
             $breakEnds   = $this->break_end ?? [];
 
-            foreach ($breakStarts as $i => $start) {
-                if (!$start) {
-                    continue;
-                }
+            $max = max(count($breakStarts), count($breakEnds));
 
-                $startTime = Carbon::createFromFormat('H:i', $start);
+            for ($i = 0; $i < $max; $i++) {
+                $start = $breakStarts[$i] ?? null;
+                $end   = $breakEnds[$i] ?? null;
 
-                /* 休憩開始が出勤前 or 退勤後 */
-                if (
-                    ($clockIn && $startTime->lt($clockIn)) ||
-                    ($clockOut && $startTime->gt($clockOut))
-                ) {
+                // ペア設定
+                if ($start && !$end) {
                     $validator->errors()->add(
-                        "break_start.$i",
-                        '休憩時間が不適切な値です'
+                        "break_end.$i",
+                        '休憩終了時刻を入力してください'
                     );
                 }
 
-                /* 休憩終了が退勤後 */
-                $end = $breakEnds[$i] ?? null;
+                if (!$start && $end) {
+                    $validator->errors()->add(
+                        "break_start.$i",
+                        '休憩開始時刻を入力してください'
+                    );
+                }
 
+                // 両方ない場合はスキップ
+                if (!$start && !$end) {
+                    continue;
+                }
+
+                // startがある時だけCarbon化
+                if ($start) {
+                    $startTime = Carbon::createFromFormat('H:i', $start);
+
+                    if (
+                        ($clockIn && $startTime->lt($clockIn)) ||
+                        ($clockOut && $startTime->gt($clockOut))
+                    ) {
+                        $validator->errors()->add(
+                            "break_start.$i",
+                            '休憩時間が不適切な値です'
+                        );
+                    }
+                }
+
+                // endがある時だけCarbon化
                 if ($end && $clockOut) {
                     $endTime = Carbon::createFromFormat('H:i', $end);
 

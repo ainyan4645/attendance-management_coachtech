@@ -39,37 +39,34 @@ class FixOvernightAttendance extends Command
      */
     public function handle()
     {
-        $yesterday = Carbon::yesterday();
-
-        $attendances = Attendance::whereDate('date', $yesterday)
+        $attendances = Attendance::where('date', '<', today())
             ->where(function ($q) {
                 $q->whereNull('clock_out')
                 ->orWhereHas('breakTimes', function ($q) {
                     $q->whereNull('break_end');
                 });
             })
+            ->with('breakTimes')
             ->get();
 
         foreach ($attendances as $attendance) {
 
-            /* 退勤が未入力の場合 → 23:59 */
+            $endOfDay = $attendance->date->copy()->endOfDay();
+
+            /* 退勤補完 */
             if (is_null($attendance->clock_out)) {
-                $attendance->clock_out = Carbon::parse(
-                    $attendance->date->format('Y-m-d') . ' 23:59'
-                );
+                $attendance->clock_out = $endOfDay;
             }
 
-            /* 休憩が戻っていない場合 → 23:59 */
+            /* 休憩補完 */
             foreach ($attendance->breakTimes as $break) {
                 if (is_null($break->break_end)) {
-                    $break->break_end = Carbon::parse(
-                        $attendance->date->format('Y-m-d') . ' 23:59'
-                    );
+                    $break->break_end = $endOfDay;
                     $break->save();
                 }
             }
 
-            /* 労働時間・休憩時間を再計算（例） */
+            /* 休憩再計算 */
             $attendance->total_break_minutes =
                 $attendance->breakTimes->sum(function ($break) {
                     return $break->break_start && $break->break_end
@@ -77,17 +74,21 @@ class FixOvernightAttendance extends Command
                         : 0;
                 });
 
+            /* 労働時間再計算 */
             $attendance->total_work_minutes =
                 $attendance->clock_in
-                    ? $attendance->clock_in->diffInMinutes($attendance->clock_out)
-                        - $attendance->total_break_minutes
+                    ? max(
+                        $attendance->clock_in->diffInMinutes($attendance->clock_out)
+                        - $attendance->total_break_minutes,
+                        0
+                    )
                     : 0;
 
             $attendance->save();
         }
 
-        $this->info('未完了勤怠を 23:59 で補正しました');
+        $this->info('未完了勤怠を補完しました');
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

@@ -98,17 +98,30 @@
 </main>
 
 <script>
-document.querySelectorAll('.tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-        // タブの active 切り替え
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
+document.addEventListener('DOMContentLoaded', function () {
 
-        const target = tab.dataset.tab;
+    const tabs = document.querySelectorAll('.tab');
+    const tbodies = document.querySelectorAll('tbody[data-tab]');
 
-        document.querySelectorAll('tbody[data-tab]').forEach(tbody => {
-            tbody.style.display =
-                tbody.dataset.tab === target ? '' : 'none';
+    // 初期表示
+    tbodies.forEach(tbody => {
+        tbody.style.display =
+            tbody.dataset.tab === 'pending' ? '' : 'none';
+    });
+    // タブクリック
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function () {
+
+            // active切替
+            tabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+
+            const target = this.dataset.tab;
+
+            tbodies.forEach(tbody => {
+                tbody.style.display =
+                    tbody.dataset.tab === target ? '' : 'none';
+            });
         });
     });
 });

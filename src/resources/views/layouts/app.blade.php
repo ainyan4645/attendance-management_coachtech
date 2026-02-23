@@ -74,10 +74,10 @@
                         <a class="header-nav-txt" href="{{ route('staff_list') }}">スタッフ一覧</a>
                     </li>
                     <li class="header-nav-ttl">
-                        <a class="header-nav-txt" href="{{ route('admin_stamp_correction_list') }}">申請一覧</a>
+                        <a class="header-nav-txt" href="{{ route('stamp_correction_list') }}">申請一覧</a>
                     </li>
                     <li class="header-nav-ttl">
-                        <form action="{{ route('admin.logout') }}" method="POST">
+                        <form action="{{ route('admin_logout') }}" method="POST">
                             @csrf
                             <button type="submit" class="header-nav-logout">ログアウト</button>
                         </form>

@@ -64,4 +64,36 @@ class Attendance extends Model
 
         return sprintf('%d:%02d', $hours, $mins);
     }
+
+    // 未退勤補完処理   (スタッフ画面→自分だけ補完 / 管理者画面→全員補完)
+    public static function autoCloseUnfinished(?int $userId = null): void
+    {
+        $query = self::whereNull('clock_out')
+            ->where('date', '<', today());
+
+        // スタッフ用（自分だけ）
+        if ($userId) {
+            $query->where('user_id', $userId);
+        }
+
+        $unfinishedAttendances = $query->get();
+
+        foreach ($unfinishedAttendances as $attendance) {
+
+            if (!$attendance->clock_in) {
+                continue;
+            }
+
+            $clockOut = $attendance->date->copy()->endOfDay();
+
+            $workMinutes =
+                $attendance->clock_in->diffInMinutes($clockOut)
+                - $attendance->total_break_minutes;
+
+            $attendance->update([
+                'clock_out'          => $clockOut,
+                'total_work_minutes' => max($workMinutes, 0),
+            ]);
+        }
+    }
 }

@@ -28,8 +28,6 @@
     border-bottom: 2px solid #e1e1e1;
     height: 90px;
     letter-spacing: 0.15em;
-    display: flex;
-    align-items: center;
 }
 
 .attendance-detail-row:last-child {
@@ -42,25 +40,30 @@
     color: #737373;
 }
 
-.attendance-detail-year {
-    width: 185px;
+.attendance-detail-name {
     padding-left: 25px;
 }
 
-.attendance-detail-work,
-.attendance-detail-break {
-    display: flex;
-    align-items: center;
-    gap: 45px;
+.attendance-detail-cell {
+    vertical-align: middle;
 }
 
-.attendance-detail-name,
+.attendance-detail-year,
 .attendance-detail-date {
+    display: inline-block;
+    width: 200px;
     padding-left: 25px;
+}
+
+.attendance-detail-separator {
+    padding: 0px 40px 0px 45px;
 }
 
 .attendance-detail-value {
+    padding: 0px 25px;
     display: inline-block;
+    min-width: 105px;
+    text-align: center;
 }
 
 .attendance-detail-input {

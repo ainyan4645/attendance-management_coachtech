@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Staff;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\Attendance\AttendanceCorrectionRequest;
+use App\Http\Requests\AttendanceCorrectionRequest;
 use Illuminate\Support\Facades\DB;
 use App\Models\Attendance;
 use App\Models\AttendanceRequest;
@@ -14,38 +14,6 @@ use Carbon\Carbon;
 
 class StampCorrectionController extends Controller
 {
-    public function list()
-    {
-        $userId = Auth::id();
-
-        $pendingRequests = AttendanceRequest::with([
-                'user',
-                'details' => function ($q) {
-                    $q->where('field', 'remark');
-                }
-            ])
-            ->where('user_id', $userId)
-            ->where('status', 'pending')
-            ->orderBy('requested_at', 'desc')
-            ->get();
-
-        $approvedRequests = AttendanceRequest::with([
-                'user',
-                'details' => function ($q) {
-                    $q->where('field', 'remark');
-                }
-            ])
-            ->where('user_id', $userId)
-            ->where('status', 'approved')
-            ->orderBy('requested_at', 'desc')
-            ->get();
-
-        return view(
-            'staff.stamp_correction_list',
-            compact('pendingRequests', 'approvedRequests')
-        );
-    }
-
     public function update(AttendanceCorrectionRequest $request, int $id)
     {
         $user = auth()->user();

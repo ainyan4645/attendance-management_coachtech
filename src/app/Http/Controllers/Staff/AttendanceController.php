@@ -118,6 +118,9 @@ class AttendanceController extends Controller
 
     public function list(Request $request)
     {
+        // 🔽 追加（未退勤自動補完）
+        Attendance::autoCloseUnfinished(auth()->id());
+
         // 表示対象の月（YYYY-MM）
         $currentMonth = $request->month
             ? Carbon::createFromFormat('Y-m', $request->month)->startOfMonth()
