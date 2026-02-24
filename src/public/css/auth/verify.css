@@ -1,0 +1,56 @@
+.verify-contents {
+    margin-top: 80px;
+    min-height: calc(100vh - 80px);
+    display: flex;
+    flex-direction: column;
+}
+
+.status-message {
+    background-color: #6de3a4;
+    font-size: 16px;
+    padding: 5px 20px;
+}
+
+.verify-box {
+    flex: 1;  /* 残り領域を占有 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.verify-text {
+    font-size: 24px;
+    font-weight: bold;
+    color: #000000;
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.verify-form {
+    display: flex;
+    justify-content: center;
+    height: 70px;
+    margin-bottom: 50px;
+}
+
+.verify-btn {
+    width: 255px;
+    height: 100%;
+    background-color: #d9d9d9;
+    border: solid 1px #000000;
+    border-radius: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #000000;
+    cursor: pointer;
+}
+
+.resend-link {
+    background: none;
+    border: none;
+    color: #0073cc;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 15px;
+}

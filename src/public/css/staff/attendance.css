@@ -1,0 +1,71 @@
+.contents {
+    margin-top: 80px;
+    min-height: calc(100vh - 80px); /* ヘッダーを除いた高さ */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 縦中央 */
+    align-items: center;     /* 横中央 */
+}
+
+.tag {
+    width: 100px;
+    height: 40px;
+    margin-bottom: 30px;
+    background-color: #C8C8C8;
+    border-radius: 50px;
+    text-align: center;
+    align-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #696969;
+    letter-spacing: 0.15em;
+}
+
+.date {
+    margin: 0px 0px 30px;
+    font-size: 40px;
+}
+
+.time {
+    margin: 0px 0px 85px;
+    font-size: 80px;
+    font-weight: bold;
+}
+
+.attendance-register{
+    display: flex;
+    gap: 80px;
+}
+
+.work-btn {
+    width: 220px;
+    height: 75px;
+    background-color: #000000;
+    border-radius: 20px;
+    font-size: 32px;
+    font-weight: bold;
+    letter-spacing: 0.15em;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.break-btn {
+    width: 220px;
+    height: 75px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    font-size: 32px;
+    font-weight: bold;
+    letter-spacing: 0.15em;
+    color: #000000;
+    border: none;
+    cursor: pointer;
+}
+
+.thanks-message {
+    font-size: 26px;
+    font-weight: bold;
+    letter-spacing: 0.15em;
+    align-self: flex-start;
+    margin-top: 15px;
+}
