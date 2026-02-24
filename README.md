@@ -9,7 +9,7 @@
 ### Laravel環境構築
 1. cd src
 2. cp .env.example .env
-3. cp .env.test_example .env.testing
+3. cp .env.example .env.testing
 4. docker-compose exec php bash
 5. composer install
 6. php artisan key:generate

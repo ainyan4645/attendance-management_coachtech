@@ -17,7 +17,7 @@ services:
       - ./src:/var/www/
 
   scheduler:
-    build: ./docker/php
+    image: laravel_clone_php   # 既存phpのビルド済みイメージを使う
     volumes:
       - ./src:/var/www/
     command: php artisan schedule:work
