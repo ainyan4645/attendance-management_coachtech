@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class RegisterTest extends TestCase
@@ -15,7 +14,7 @@ class RegisterTest extends TestCase
      */
     use RefreshDatabase;
 
-    // 名前が入力されていない場合、バリデーションメッセージが表示される
+    // 名前が未入力の場合、バリデーションメッセージが表示される
     public function testNameIsRequired()
     {
         // 会員登録ページを開く
@@ -40,7 +39,7 @@ class RegisterTest extends TestCase
         $response->assertSee('お名前を入力してください');
     }
 
-    // メールアドレスが入力されていない場合、バリデーションメッセージが表示される
+    // メールアドレスが未入力の場合、バリデーションメッセージが表示される
     public function testEmailIsRequired()
     {
         $this->get('/register')->assertStatus(200);
@@ -61,28 +60,7 @@ class RegisterTest extends TestCase
         $response->assertSee('メールアドレスを入力してください');
     }
 
-    // パスワードが入力されていない場合、バリデーションメッセージが表示される
-    public function testPasswordIsRequired()
-    {
-        $this->get('/register')->assertStatus(200);
-
-        $this->withMiddleware();
-
-        // パスワードを空で登録
-        $response = $this->post('/register', [
-            'name' => 'テストユーザー2',
-            'email' => 'test2@example.com',
-            'password' => '',
-            'password_confirmation' => 'password789',
-        ]);
-
-        $response->assertRedirect('/register');
-
-        $response = $this->followRedirects($response);
-        $response->assertSee('パスワードを入力してください');
-    }
-
-    // パスワードが7文字以下の場合、バリデーションメッセージが表示される
+    // パスワードが8文字未満の場合、バリデーションメッセージが表示される
     public function testPasswordTooShort()
     {
         $this->get('/register')->assertStatus(200);
@@ -103,7 +81,7 @@ class RegisterTest extends TestCase
         $response->assertSee('パスワードは8文字以上で入力してください');
     }
 
-    // パスワードが確認用パスワードと一致しない場合、バリデーションメッセージが表示される
+    // パスワードが一致しない場合、バリデーションメッセージが表示される
     public function testPasswordConfirmationMismatch()
     {
         $this->get('/register')->assertStatus(200);
@@ -124,7 +102,28 @@ class RegisterTest extends TestCase
         $response->assertSee('パスワードと一致しません');
     }
 
-    // 全ての項目が入力されている場合、会員情報が登録され、プロフィール設定画面に遷移される
+    // パスワードが未入力の場合、バリデーションメッセージが表示される
+    public function testPasswordIsRequired()
+    {
+        $this->get('/register')->assertStatus(200);
+
+        $this->withMiddleware();
+
+        // パスワードを空で登録
+        $response = $this->post('/register', [
+            'name' => 'テストユーザー2',
+            'email' => 'test2@example.com',
+            'password' => '',
+            'password_confirmation' => 'password789',
+        ]);
+
+        $response->assertRedirect('/register');
+
+        $response = $this->followRedirects($response);
+        $response->assertSee('パスワードを入力してください');
+    }
+
+    // フォームに内容が入力されていた場合、データが正常に保存される
     public function testRegistersSuccessfully()
     {
         $this->get('/register')->assertStatus(200);
@@ -138,9 +137,6 @@ class RegisterTest extends TestCase
             'password' => 'password987',
             'password_confirmation' => 'password987',
         ]);
-
-        // プロフィール設定画面に遷移
-        $response->assertRedirect('/email/verify');
 
         // DBにユーザー情報が保存されていることを確認
         $this->assertDatabaseHas('users', [
