@@ -18,7 +18,7 @@
 9. php artisan db:seed
 10. php artisan storage:link
 11. mailtrapアカウントを作成→ [https://mailtrap.io/](https://mailtrap.io/)<br>(`sign in`をクリックし会員登録、`Email Sandbox`を選択し利用開始する)
-12. Email Sandbox の `Start Testing` をクリックし、SMTPタブで表示されているUsername と Password を .env にコピペする
+12. Email Sandbox の `Start Testing` をクリックし、SMTPタブで表示されているUsername と Password を .env にコピペする<br>Username と Passwordを追加して以下に修正↓
 ```env
 MAIL_MAILER=smtp
 MAIL_HOST=sandbox.smtp.mailtrap.io
@@ -30,11 +30,20 @@ MAIL_FROM_ADDRESS=no-reply@example.com
 MAIL_FROM_NAME="${APP_NAME}"
 ```
 
-13. php artisan config:clear
+13.  php artisan config:clear
 
  ※permissionエラーが出る場合は `/flea-market_coachtech` ディレクトリで以下のコマンドを実行してください。
  ```bash
  sudo chmod -R 777 src/*
+ ```
+その他、
+.envやDBを変更した場合、キャッシュが原因でエラーになることがあります。
+その場合はphpコンテナ内で以下のコマンドを実行してください。
+ ```
+php artisan config:clear
+php artisan cache:clear
+php artisan route:clear
+php artisan view:clear
  ```
 
 
